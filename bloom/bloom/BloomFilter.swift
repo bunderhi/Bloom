@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BloomFilter {
+public class BloomFilter {
     
     let m: Int
     let k: Int
@@ -16,7 +16,7 @@ class BloomFilter {
     var count: Int
     private var b: [Bool]
     
-    init(capacity: Int, errorRate: Float) {
+    public init(capacity: Int, errorRate: Float) {
         let mFloat = ceil((Float(capacity) * log(errorRate)) / log(1.0 / (pow(2.0, log(2.0)))))
         k = Int(round(log(2.0) * mFloat / Float(capacity)))
         m = Int(mFloat)
@@ -25,7 +25,7 @@ class BloomFilter {
         b = [Bool](count: m, repeatedValue: false)
     }
     
-    func truthiness() -> Double {
+    public func truthiness() -> Double {
         var trueBits  = 0
         for i in b {
             if i  { ++trueBits }
@@ -33,7 +33,7 @@ class BloomFilter {
         return Double(trueBits) / Double(m)
     }
     
-    func probError() -> Double {
+    public func probError() -> Double {
         return pow(truthiness(),Double(k))
     }
     
@@ -60,14 +60,14 @@ class BloomFilter {
     
     
     
-    func setValue(data: String) {
+    public func setValue(data: String) {
         for i in 1...k {
             b[getHash(data,index: i)] = true
         }
         ++count
     }
     
-    func contains(data: String) -> Bool {
+    public func contains(data: String) -> Bool {
         for i in 1...k {
             if !b[getHash(data,index: i)] {
                 return false

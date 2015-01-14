@@ -6,8 +6,9 @@
 //  Copyright (c) 2015 Brian Underhill. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import XCTest
+import bloom
 
 class bloomTests: XCTestCase {
     
@@ -44,10 +45,16 @@ class bloomTests: XCTestCase {
     
     func testExample() {
         // This is an example of a functional test case.
-        var f = BloomFilter(capacity: 200, errorRate: 0.01)
-
         
-        XCTAssert(true, "Pass")
+        var f = BloomFilter(capacity: 200, errorRate: 0.01)
+        let a = randomStrings(20, maxLength: 20)
+        for i in a {
+            f.setValue(i)
+        }
+        f.setValue("sdfsdewr34")
+        
+        XCTAssert(f.contains("sdfsdewr34"), "Pass contains test")
+        XCTAssertFalse(f.contains("werew"), "Pass not contaions test")
     }
     
     func testPerformanceExample() {
